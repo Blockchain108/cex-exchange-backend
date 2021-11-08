@@ -1,21 +1,19 @@
 const express = require("express")
 const cors = require("cors")
 const bodyParser = require("body-parser")
-const xmlparser = require("express-xml-bodyparser")
 const path = require("path")
 const mongoose = require("mongoose")
 const config = require("../config")
 const PlayerRouter = require("./router")
 const app = express();
 
-mongoose.connect(config.DBCONNECT, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true, useCreateIndex: true }).then(() => {
+mongoose.connect(config.DBCONNECT, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("Database is connected")
 }, err => { console.log('Can not connect to the database' + err) });
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(xmlparser());
 app.use(express.static(config.BASEURL + '/client'));
 app.use(express.static(config.BASEURL + '/uploads'));
 
